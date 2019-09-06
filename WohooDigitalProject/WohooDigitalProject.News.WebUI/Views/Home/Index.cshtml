@@ -1,0 +1,36 @@
+﻿@model IEnumerable<WohooDigitalProject.News.Entities.Concrete.Haber>
+@{
+    ViewBag.Title = "Anasayfa";
+}
+
+<h1>HABERLER</h1>
+
+<div class="container">
+    @foreach (var haber in Model)
+    {
+        <div class="row">
+            <div class="col-md-5">
+                <img src="~/CmsFile/@haber.Image" width="250" height="200" class="img-thumbnail img-fluid">
+            </div>
+            <div class="col-md-7">
+                <p><a href="/haber/@(WohooDigitalProject.News.WebUI.URLHelper.UrlClass.UrlHelper(haber.Title))-@haber.Id">@haber.Title</a></p>
+                <p>@haber.Description</p>
+            </div>
+        </div>
+        <hr />
+    }
+
+    <nav aria-label="...">
+        <ul class="pagination pagination-lg">
+            @for (int i = 1; i <= (int)TempData["sayfaSayisi"]; i++)
+            {
+
+                <li class="page-item"><a class="page-link" href="/?page=@i">@i</a></li>
+            }
+        </ul>
+    </nav>
+
+
+</div>
+
+

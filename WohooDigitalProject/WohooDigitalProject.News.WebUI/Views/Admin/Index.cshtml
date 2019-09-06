@@ -1,0 +1,96 @@
+﻿@model IEnumerable<WohooDigitalProject.News.Entities.Concrete.Haber>
+@{
+    ViewBag.Title = "Haberler Admin Paneli";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+}
+
+<h1>Haberler</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <a class="btn btn-success" href="/Admin/HaberEkle">Haber Ekle</a>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Başlık</th>
+                        <th scope="col">Detay Sayfası Görseli</th>
+                        <th scope="col">Sıra No</th>
+                        <th scope="col">Haber Durumu</th>
+                        <th scope="col">Güncelleme Tarihi</th>
+                        <th scope="col">Sil</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var haber in Model)
+                    {
+                        <tr>
+
+                            <td><a href="/Admin/HaberGuncelle/@haber.Id">@haber.Title</a></td>
+                            <td> <img src="~/CmsFile/@haber.Image" width="200" height="150" class="img-thumbnail img-fluid"></td>
+                            <td>@haber.OrderNumber</td>
+                            <td>
+                                @if (haber.IsActive)
+                                {
+                                    <span class="badge badge-success">Aktif</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-danger">Aktif Değil</span>
+                                }
+                            </td>
+
+                            <td>@haber.UpdateDate</td>
+
+                            <td>
+
+                                <button id="myButton" type="button" class="btn btn-primary" data-toggle="modal" data-target="@haber.Id">
+                                    Sil
+                                </button>
+
+
+                            </td>
+
+                        </tr>
+
+                    }
+
+                </tbody>
+            </table>
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalScrollableTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalScrollableTitle">SİL</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Silmek İstediğinize Emin Misiniz ?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                            <a href="" class="btn btn-danger" id="myButtonDelete">Sil</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <nav aria-label="...">
+                <ul class="pagination pagination-lg">
+                    @for (int i = 1; i <= (int)TempData["sayfaSayisi"]; i++)
+                    {
+
+                        <li class="page-item"><a class="page-link" href="/Admin/Index?page=@i">@i</a></li>
+                    }
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).on('click', '#myButton', function () {
+        $('#myModal').modal('show');
+        $("#myButtonDelete").attr("href", "/Admin/Delete/" + $(this).attr("data-target")); 
+    });
+</script>

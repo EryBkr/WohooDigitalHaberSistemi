@@ -1,0 +1,15 @@
+﻿@model WohooDigitalProject.News.Entities.Concrete.Haber
+@{
+    ViewBag.Title = "HaberDetay";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>@Model.Title</h1>
+            <hr />
+            <img src="~/CmsFile/@Model.Image" width="550" height="400" class="img-thumbnail img-fluid">
+            <p>@Model.Description</p>
+        </div>
+    </div>
+</div>
